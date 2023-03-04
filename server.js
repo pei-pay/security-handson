@@ -6,6 +6,8 @@ app.get('/', (req, res, next) => {
   res.end('Top Page')
 })
 
+app.use(express.static('public'))
+
 app.listen(port, () => {
-  console.log(`Server is running on htt://localhost:${port}`)
+  console.log(`Server is running on http://localhost:${port}`)
 })
