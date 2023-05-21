@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>XSS検証用ページ</title>
+  </head>
+  <body>
+    <h1>XSS検証用ページ</h1>
+    <div id="result"></div>
+    <a id="link" href="#">リンクをクリック</a>
+
+    <script>
+      const url = new URL(location.href)
+      console.log(url)
+      const message = url.searchParams.get('message')
+      if (message !== null) {
+        // DANGER: ユーザーが入力したqueryParamをそのままhtml要素として埋め込んでしまうのは危険
+        // document.querySelector('#result').innerHTML = message
+
+        // SOLUTION1: 文字列をtextNodeとして扱う
+        const textNode = document.createTextNode(message)
+        document.querySelector('#result').appendChild(textNode)
+
+        // SOLUTION2: textContextへ代入する
+        document.querySelector('#result').textContent = message
+      }
+    </script>
+  </body>
+</html>
